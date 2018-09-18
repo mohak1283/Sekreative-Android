@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sekreative</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_feed">Feed</string>
+    <string name="title_chat">Chat</string>
+    <string name="title_add_post">Add Post</string>
+    <string name="title_wallet">Wallet</string>
+</resources>
