@@ -57,12 +57,7 @@ public class BottomNavDrawer extends BottomSheetDialogFragment {
         rvMenuOptions.setLayoutManager(linearLayoutManager);
         rvMenuOptions.setAdapter(bottomNavAdapter);
 
-        bottomNavAdapter.setNavListener(new BottomNavAdapter.NavItemListener() {
-            @Override
-            public void onNavItemClicked(NavigationItem item) {
-                mListener.onMenuItemClicked(item.getTag());
-            }
-        });
+        bottomNavAdapter.setNavListener(item -> mListener.onMenuItemClicked(item.getTag()));
 
     }
 
