@@ -60,12 +60,9 @@ public class BottomNavAdapter extends RecyclerView.Adapter<BottomNavAdapter.Navi
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        mListener.onNavItemClicked(navigationItems.get(getAdapterPosition()));
-                    }
+            itemView.setOnClickListener(view -> {
+                if (mListener != null) {
+                    mListener.onNavItemClicked(navigationItems.get(getAdapterPosition()));
                 }
             });
 

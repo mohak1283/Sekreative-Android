@@ -2,13 +2,11 @@ package com.sekreative.sekreative.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sekreative.sekreative.R;
+import com.sekreative.sekreative.ui.addpost.AddPostFragment;
 import com.sekreative.sekreative.ui.chat.ChatFragment;
 import com.sekreative.sekreative.ui.feed.FeedFragment;
 import com.sekreative.sekreative.ui.notifications.NotificationFragment;
@@ -16,7 +14,6 @@ import com.sekreative.sekreative.ui.wallet.WalletFragment;
 import com.sekreative.sekreative.utils.NavigationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -43,21 +40,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
             showFragment(FeedFragment.instantiate());
         }
 
-        bottomBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(MainActivity.this, "Id is " + item.getItemId(), Toast.LENGTH_SHORT).show();
-                return false;
+        fab.setOnClickListener(view -> {
+            if (!CURRENT_FRAGMENT.equals(AddPostFragment.TAG)) {
+                showFragment(AddPostFragment.instantiate());
+                CURRENT_FRAGMENT = AddPostFragment.TAG;
             }
         });
 
-        bottomBar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                bottomDrawer = BottomNavDrawer.instantiate(NavigationUtils.getMainNavigationItems());
-                bottomDrawer.show(getSupportFragmentManager(), "bottom-drawer");
-            }
+        bottomBar.setNavigationOnClickListener(view -> {
+            bottomDrawer = BottomNavDrawer.instantiate(NavigationUtils.getMainNavigationItems());
+            bottomDrawer.show(getSupportFragmentManager(), "bottom-drawer");
         });
 
     }
