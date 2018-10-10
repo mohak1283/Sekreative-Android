@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
 
         fab.setOnClickListener(view -> {
             if (!CURRENT_FRAGMENT.equals(AddPostFragment.TAG)) {
-                showFragment(AddPostFragment.instantiate(), AddPostFragment.TAGc);
+                showFragment(AddPostFragment.instantiate(), AddPostFragment.TAG);
                 CURRENT_FRAGMENT = AddPostFragment.TAG;
             }
         });
