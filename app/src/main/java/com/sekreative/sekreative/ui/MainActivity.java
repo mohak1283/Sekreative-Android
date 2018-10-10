@@ -7,10 +7,8 @@ import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.sekreative.sekreative.R;
 import com.sekreative.sekreative.ui.addpost.AddPostFragment;
-import com.sekreative.sekreative.ui.chat.ChatFragment;
 import com.sekreative.sekreative.ui.feed.FeedFragment;
 import com.sekreative.sekreative.ui.notifications.NotificationFragment;
-import com.sekreative.sekreative.ui.wallet.WalletFragment;
 import com.sekreative.sekreative.utils.NavigationUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
 
         fab.setOnClickListener(view -> {
             if (!CURRENT_FRAGMENT.equals(AddPostFragment.TAG)) {
-                showFragment(AddPostFragment.instantiate());
+                showFragment(AddPostFragment.instantiate(), AddPostFragment.TAGc);
                 CURRENT_FRAGMENT = AddPostFragment.TAG;
             }
         });
@@ -81,22 +79,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
                     CURRENT_FRAGMENT = FeedFragment.TAG;
                 }
                 break;
-            case NavigationUtils.NAV_CHAT:
-                if (!CURRENT_FRAGMENT.equals(ChatFragment.TAG)) {
-                    showFragment(ChatFragment.instantiate());
-                    CURRENT_FRAGMENT = ChatFragment.TAG;
-                }
-                break;
             case NavigationUtils.NAV_NOTIFICATIONS:
                 if (!CURRENT_FRAGMENT.equals(NotificationFragment.TAG)) {
-                    showFragment(NotificationFragment.instantiate());
+                    showFragment(NotificationFragment.instantiate(), NotificationFragment.TAG);
                     CURRENT_FRAGMENT = NotificationFragment.TAG;
-                }
-                break;
-            case NavigationUtils.NAV_WALLET:
-                if (!CURRENT_FRAGMENT.equals(WalletFragment.TAG)) {
-                    showFragment(WalletFragment.instantiate());
-                    CURRENT_FRAGMENT = WalletFragment.TAG;
                 }
                 break;
         }
