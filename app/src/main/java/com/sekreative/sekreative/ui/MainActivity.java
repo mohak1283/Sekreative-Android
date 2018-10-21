@@ -1,32 +1,35 @@
 package com.sekreative.sekreative.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import com.google.android.material.bottomappbar.BottomAppBar;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.sekreative.sekreative.R;
 import com.sekreative.sekreative.ui.addpost.AddPostFragment;
+import com.sekreative.sekreative.ui.auth.AuthActivity;
 import com.sekreative.sekreative.ui.feed.FeedFragment;
 import com.sekreative.sekreative.ui.notifications.NotificationFragment;
 import com.sekreative.sekreative.utils.NavigationUtils;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements BottomNavDrawer.MenuItemClickListener {
+public class MainActivity extends AppCompatActivity { //implements BottomNavDrawer.MenuItemClickListener {
 
     private static String CURRENT_FRAGMENT = "";
 
-    @BindView(R.id.bottom_bar)
+   /** @BindView(R.id.bottom_bar)
     BottomAppBar bottomBar;
     @BindView(R.id.fab)
-    FloatingActionButton fab;
+    FloatingActionButton fab; */
 
-    private BottomNavDrawer bottomDrawer;
+//    private BottomNavDrawer bottomDrawer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
             showFragment(FeedFragment.instantiate());
         }
 
-        fab.setOnClickListener(view -> {
+     /**   fab.setOnClickListener(view -> {
             if (!CURRENT_FRAGMENT.equals(AddPostFragment.TAG)) {
                 showFragment(AddPostFragment.instantiate(), AddPostFragment.TAG);
                 CURRENT_FRAGMENT = AddPostFragment.TAG;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
         bottomBar.setNavigationOnClickListener(view -> {
             bottomDrawer = BottomNavDrawer.instantiate(NavigationUtils.getMainNavigationItems());
             bottomDrawer.show(getSupportFragmentManager(), "bottom-drawer");
-        });
+        }); */
 
     }
 
@@ -67,10 +70,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
         showFragment(fragment, "");
     }
 
-    @Override
+ /**   @Override
     public void onMenuItemClicked(String tag) {
         if (bottomDrawer != null) {
-            bottomDrawer.dismiss();
+          //  bottomDrawer.dismiss();
         }
         switch (tag) {
             case NavigationUtils.NAV_FEED:
@@ -86,5 +89,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavDrawer.M
                 }
                 break;
         }
+    }  */
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_logout) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
