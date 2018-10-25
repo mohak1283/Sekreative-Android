@@ -2,23 +2,23 @@ package com.sekreative.sekreative.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
 import com.sekreative.sekreative.R;
 import com.sekreative.sekreative.models.NavigationItem;
 import com.sekreative.sekreative.ui.main.BottomNavAdapter;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BottomNavDrawer extends BottomSheetDialogFragment {
+/**public class BottomNavDrawer extends BottomSheetDialogFragment {
 
     @BindView(R.id.rv_menu_options)
     RecyclerView rvMenuOptions;
@@ -75,4 +75,4 @@ public class BottomNavDrawer extends BottomSheetDialogFragment {
         void onMenuItemClicked(String tag);
     }
 
-}
+} */

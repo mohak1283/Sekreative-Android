@@ -2,9 +2,10 @@ package com.sekreative.sekreative.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 
-import androidx.annotation.DrawableRes;
-import androidx.annotation.StringRes;
+
 
 public class NavigationItem implements Parcelable {
 
