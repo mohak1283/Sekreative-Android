@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,7 +68,7 @@ public class AuthFragment extends Fragment {
     private FirebaseAuth mFirebaseauth;
     private String phonenumber;
     private boolean isConnected;
-    private String phn;
+    private String phone;
     private long phoneLong;
 
     @BindView(R.id.pb_main)
@@ -99,6 +100,9 @@ public class AuthFragment extends Fragment {
 
     @BindView(R.id.et_otp)
     EditText otp_editText;
+
+    private static final String KEY_PHONE = "key-phone";
+    private static final String KEY_USER_ID = "key-userid";
 
 
     @Override
@@ -232,26 +236,33 @@ public class AuthFragment extends Fragment {
 
                         progressBar.setVisibility(View.INVISIBLE);
                         final FirebaseUser user = task.getResult().getUser();
-                        phn = user.getPhoneNumber();
+                        phone = user.getPhoneNumber();
                         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Log.e("OtpActivtiySignUp", "User Id Sent to intent extra: " + userId);
-                        phoneLong = Long.parseLong(phn);
+                        phoneLong = Long.parseLong(phone);
                         final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("phoneNumbers");
                         rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot snapshot) {
-                                if (snapshot.hasChild(phn)) {
+                                if (snapshot.hasChild(phone)) {
                                     Toast.makeText(getActivity(), "Sign In Successful!", Toast.LENGTH_SHORT).show();
+
                                     Intent intent = new Intent(getActivity(),MainActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    intent.putExtra("phn",phn);
                                     startActivity(intent);
                                     requireActivity().finish();
 
                                 } else{
                                     Log.e(TAG , "New User , Send to Data Collection Fragment");
+
+                                    DataCollectionFragment fragment = new DataCollectionFragment();
+                                      Bundle args = new Bundle();
+                                     args.putString(KEY_PHONE, phone);
+                                    args.putString(KEY_USER_ID, userId);
+                                    fragment.setArguments(args);
+                                    showFragment(fragment);
                                 }
 
                             }
@@ -271,5 +282,20 @@ public class AuthFragment extends Fragment {
                     }
                 });
             }
+
+    private void showFragment(Fragment fragment) {
+        showFragment(fragment, "");
+    }
+
+    private void showFragment(Fragment fragment, String tag) {
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_auth, fragment);
+        if (!TextUtils.isEmpty(tag)) {
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
+    }
+
+
 
     }

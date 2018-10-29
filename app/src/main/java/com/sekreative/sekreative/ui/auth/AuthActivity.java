@@ -29,6 +29,7 @@ public class AuthActivity extends AppCompatActivity {
     private void showFragment(Fragment fragment) {
         showFragment(fragment, "");
     }
+
     private void showFragment(Fragment fragment, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_auth, fragment);
